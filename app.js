@@ -1,9 +1,15 @@
 'use strict'
+
 const parentContainer = document.querySelector('.parent-container')
 const clearButton = document.createElement('button')
 const userInput = document.createElement('button')
+const messageContainer = document.createElement('div')
+const message = document.createElement('div')
+document.body.appendChild(messageContainer)
+messageContainer.appendChild(message)
 userInput.textContent = 'Choose amount of squares'
 userInput.classList.add('user-input')
+message.classList.add('mode')
 clearButton.textContent = 'Clear Grid'
 clearButton.classList.add('button')
 parentContainer.appendChild(clearButton)
@@ -11,6 +17,7 @@ parentContainer.appendChild(userInput)
 const container = document.querySelector('.container')
 
 let width = 16
+let click = true
 
 renderGrid(width)
 function renderGrid(gridWidth) {
@@ -22,6 +29,7 @@ function renderGrid(gridWidth) {
         element.style.height = `${450 / gridWidth}px`
         container.appendChild(element)
     }
+    changeColor()
 }
 
 let squares = document.querySelectorAll('.square')
@@ -31,26 +39,28 @@ userSelection()
 function userSelection(width) {
     let userChoice = userInput.addEventListener('click', () => {
         userChoice = +prompt('How many squares would you like?')
-         width += userChoice
+        width += userChoice
         if (userChoice > 0 && userChoice <= 100) {
             width = userChoice
             renderGrid(width)
-            affectGrid()
+            changeColor()
         } else {
             alert(`Invald input! The maximum number of squares are 100.`)
         }
     })
 }
 
-affectGrid()
-function affectGrid() {
+function changeColor() {
     const squares = document.querySelectorAll('.square')
     squares.forEach(square => {
         square.addEventListener('mouseover', () => {
-            square.style.backgroundColor = getRandomColor()
+            if (click) {
+                square.style.backgroundColor = getRandomColor()
+            }
         })
     })
 }
+
 
 resetButton()
 function resetButton() {
@@ -68,4 +78,20 @@ function getRandomColor(length) {
         color += letters[Math.floor(Math.random() * 16)]
     }
     return color
+}
+
+isClicked()
+
+function isClicked() {
+    message.textContent = click ? 'Color Mode: on' : 'Color Mode: off';
+    document.querySelector('body').addEventListener('click', (e) => {
+        if (e.target.tagName != 'BUTTON') {
+            click = !click
+            if (click) {
+                message.textContent = 'Color Mode: on'
+            } else {
+                message.textContent = 'Color Mode: off'
+            }
+        }
+    })
 }
