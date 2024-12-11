@@ -39,6 +39,7 @@ body {
     padding: 10px;
     border-radius: 15px;
     box-shadow: 7px 7px 12px crimson, -7px -7px 12px crimson;
+    cursor: pointer;
 }
 
 .user-input {
@@ -53,4 +54,14 @@ body {
     font-size: 1.3rem;
     padding: 10px;
     border-radius: 15px;
+    cursor: pointer;
+}
+
+.mode {
+    margin-left: 30px;
+    font-family: cursive;
+    background: rgb(202, 111, 202);
+    width: 120px;
+    border: 2px solid darkred;
+    padding: 2px;
 }
